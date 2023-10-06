@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<style>
+    table {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+        border: 3px solid purple;
+    }
+
+    thead th:nth-child(1) {
+        width: 30%;
+    }
+
+    thead th:nth-child(2) {
+        width: 20%;
+    }
+
+    thead th:nth-child(3) {
+        width: 15%;
+    }
+
+    thead th:nth-child(4) {
+        width: 35%;
+    }
+
+    th,
+    td {
+        padding: 20px;
+    }
+</style>
+<table>
+    <caption>
+        A summary of the UK's most famous punk bands
+    </caption>
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">name</th>
+        <th scope="col">email</th>
+        <th scope="col">status</th>
+    </tr>
+    </thead>
+    <tbody id="tbody">
+    <tr>
+        <th scope="row">Buzzcocks</th>
+        <td>1976</td>
+        <td>9</td>
+        <td>Ever fallen in love (with someone you shouldn't've)</td>
+    </tr>
+
+    </tbody>
+    <tfoot>
+    <tr>
+        <th scope="row" colspan="2">Total albums</th>
+        <td colspan="2">77</td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+    });
+
+    function getAllUsers() {
+        $.ajax({ // ajax call starts
+            type: "GET", // POST method
+            url: "http://localhost:3000/users/api/getAllUsers",
+            success: function (response) {
+                var tbody = $("#tbody");
+                for(var i = 0; i < response['data'].length; i++) {
+                    var tr = $("<tr>");
+                    var id = $("<p>").text(response['data'][i]['id']);
+                    var name = $("<td>").text(response['data'][i]['name']);
+                    var status = $("<td>").text(response['data'][i]['status']);
+                    var email = $("<td>").text(response['data'][i]['email']);
+                    tr.append(id,name,status,email);
+                    tbody.append(tr)
+                }
+
+                console.log(response);
+            },
+        });
+    }
+
+    getAllUsers();
+</script>
+</html>
