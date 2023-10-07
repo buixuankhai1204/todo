@@ -124,15 +124,19 @@
                 'Content-Type': 'application/json',
             },
             success: function (response) {
-                var tbody = $("#tbody");
-                for(var i = 0; i < response['data'].length; i++) {
-                    var tr = $("<tr>");
-                    var id = $("<p>").text(response['data'][i]['id']);
-                    var name = $("<td>").text(response['data'][i]['name']);
-                    var status = $("<td>").text(response['data'][i]['status']);
-                    var email = $("<td>").text(response['data'][i]['email']);
-                    tr.append(id,name,status,email);
-                    tbody.append(tr)
+                if(response['status'] === "success") {
+                    var tbody = $("#tbody");
+                    for(var i = 0; i < response['data'].length; i++) {
+                        var tr = $("<tr>");
+                        var id = $("<p>").text(response['data'][i]['id']);
+                        var name = $("<td>").text(response['data'][i]['name']);
+                        var status = $("<td>").text(response['data'][i]['status']);
+                        var email = $("<td>").text(response['data'][i]['email']);
+                        tr.append(id,name,status,email);
+                        tbody.append(tr)
+                    }
+                } else if(response['status'] === "fail") {
+                    alert(response['message']);
                 }
 
                 console.log(response);
