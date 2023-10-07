@@ -7,6 +7,20 @@
 </head>
 <body>
 <style>
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    .button2 {background-color: #008CBA;}
+
     table {
         table-layout: fixed;
         width: 100%;
@@ -63,6 +77,8 @@
     </tr>
     </tfoot>
 </table>
+<button class="button" onclick="insertUser()">Green</button>
+<button class="button button2">Blue</button>
 </body>
 <script>
     $(document).ready(function () {
@@ -91,5 +107,41 @@
     }
 
     getAllUsers();
+
+    function insertUser() {
+        var data = {
+            name: 123,
+            status: "online",
+            email: "vovankhoa@gmail.com",
+            age: "asfasf",
+        }
+        $.ajax({ // ajax call starts
+
+            type: "POST", // POST method
+            url: "http://localhost:3000/users/api/insertUser",
+            data: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            success: function (response) {
+                var tbody = $("#tbody");
+                for(var i = 0; i < response['data'].length; i++) {
+                    var tr = $("<tr>");
+                    var id = $("<p>").text(response['data'][i]['id']);
+                    var name = $("<td>").text(response['data'][i]['name']);
+                    var status = $("<td>").text(response['data'][i]['status']);
+                    var email = $("<td>").text(response['data'][i]['email']);
+                    tr.append(id,name,status,email);
+                    tbody.append(tr)
+                }
+
+                console.log(response);
+                // this api  can show data if fecth succes with data structure like :
+                // obj = {
+                //   name : "abc",
+
+            },
+        });
+    }
 </script>
 </html>
