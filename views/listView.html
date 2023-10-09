@@ -46,7 +46,8 @@
                 if (response['status'] === 'success') {
                     var tbody = $("#userTableBody");
                     for (var i = 0; i < response['data'].length; i++) {
-                        insertRowTable(tbody, response['data'][i])
+                        console.log(response['data'][i]);
+                        insertRowTable(tbody, response['data'][i]);
                     }
                 } else {
                     alert(response['status'])

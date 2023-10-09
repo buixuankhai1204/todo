@@ -5,13 +5,13 @@ module.exports = class userController {
 
         const [users, status] = await user.getAllUser(req, next );
         if (status === true) {
-            return res.status(200).json({
+            res.status(200).json({
                 status: "success",
                 data: users,
                 message: "get all users success"
             })
         } else {
-            return res.status(200).json({
+            res.status(200).json({
                 status: "fail",
                 message: users
             })

@@ -5,23 +5,15 @@ module.exports = class User {
             req.params.pages = req.params.pages * 1 || 1;
             const page = req.params.pages;
             const limit = req.query.limit;
-            const skip = (page - 1) * limit || 10;
-            const skipTo = (page - 1) * limit + 10 || 10;
-            let [rows] = await db.query('SELECT * FROM `inquiry` WHERE `Check` = 0');
+            const skip = (page - 1) * limit;
+            let [rows] = await db.execute('SELECT * FROM `inquiry`');
+            console.log(rows);
             if (rows.length !== 0) {
+                console.log("asfasf");
                 return [rows, true];
             } else {
                 return ["cannot get all rows", false];
             }
-            // db.query("SELECT * FROM `inquiry`", function (err, rows, fields) {
-            //     // Connection is automatically released when query resolves
-            //     if (users.length !== 0) {
-            //         return [users, true];
-            //     } else {
-            //         return ["cannot get all rows", false];
-            //     }
-            // });
-
         } catch (err) {
             return [err.sqlMessage, false]
         }

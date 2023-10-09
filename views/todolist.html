@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script  src="./viewjsDynamic.js"></script>
 </head>
 <body>
 <style>
@@ -92,15 +93,8 @@
             success: function (response) {
                 var tbody = $("#tbody");
                 for(var i = 0; i < response['data'].length; i++) {
-                    var tr = $("<tr>");
-                    var id = $("<p>").text(response['data'][i]['id']);
-                    var name = $("<td>").text(response['data'][i]['name']);
-                    var status = $("<td>").text(response['data'][i]['status']);
-                    var email = $("<td>").text(response['data'][i]['email']);
-                    tr.append(id,name,status,email);
-                    tbody.append(tr)
+                    insertRowTable(tbody, response['data'][i]);
                 }
-
                 console.log(response);
             },
         });
@@ -127,23 +121,11 @@
                 if(response['status'] === "success") {
                     var tbody = $("#tbody");
                     for(var i = 0; i < response['data'].length; i++) {
-                        var tr = $("<tr>");
-                        var id = $("<p>").text(response['data'][i]['id']);
-                        var name = $("<td>").text(response['data'][i]['name']);
-                        var status = $("<td>").text(response['data'][i]['status']);
-                        var email = $("<td>").text(response['data'][i]['email']);
-                        tr.append(id,name,status,email);
-                        tbody.append(tr)
+                        insertRowTable(tbody, response['data'][i]);
                     }
                 } else if(response['status'] === "fail") {
                     alert(response['message']);
                 }
-
-                console.log(response);
-                // this api  can show data if fecth succes with data structure like :
-                // obj = {
-                //   name : "abc",
-
             },
         });
     }
