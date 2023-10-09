@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Input Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+</style>
+<div class="container">
+    <h1>User Input Form</h1>
+    <div class="form-group">
+        <label for="name">name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="Email" placeholder="Enter your Email" required>
+    </div>
+    <div class="form-group">
+        <label for="companyName">Company name:</label>
+        <input type="email" id="companyName" name="companyName" placeholder="Enter your companyName" required>
+    </div>
+    <div class="form-group">
+        <label for="countryCode">Country code:</label>
+        <input type="text" id="countryCode" name="countryCode" placeholder="Enter your countryCode" required>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Phone number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phoneNumber" required>
+    </div>
+    <div class="form-group">
+        <label for="content">Content:</label>
+        <input type="text" id="content" name="content" placeholder="Enter your content" required>
+    </div>
+    <p type="submit" onclick="insertUser()">Submit</p>
+</div>
+</body>
+
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+    });
+
+    function insertUser() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var companyName = document.getElementById('companyName').value;
+        var countryCode = document.getElementById('countryCode').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        var content = document.getElementById('content').value;
+        var data = {
+            name,
+            email,
+            companyName,
+            countryCode,
+            phoneNumber,
+            content,
+        }
+        $.ajax({ // ajax call starts
+
+            type: "POST", // POST method
+            url: "http://localhost:3000/api/insertUser",
+            data: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            success: function (response) {
+                if (response['status'] === "success") {
+                    alert(response['message'])
+                } else if (response['status'] === "fail") {
+                    alert(response['message'])
+                }
+
+                console.log(response);
+                // this api  can show data if fecth succes with data structure like :
+                // obj = {
+                //   name : "abc",
+
+            },
+        });
+    }
+</script>
+</html>

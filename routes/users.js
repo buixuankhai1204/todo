@@ -7,7 +7,10 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get('/', async function (req, res, next) {
-  res.sendFile(path.join(__dirname, '../views/todolist.html'));
+  res.sendFile(path.join(__dirname, '../views/insertView.html'));
+});
+router.get('/list', async function (req, res, next) {
+  res.sendFile(path.join(__dirname, '../views/listView.html'));
 });
 router.route('/api/getAllUsers').get(userController.getAllUser);
 router.route('/api/insertUser').post(userController.insertUser)

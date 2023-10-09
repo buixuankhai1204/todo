@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information Table</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./javascriptHandleViews.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <h1>User Information Table</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+        </thead>
+        <tbody id="userTableBody">
+        <!-- User information will be inserted here -->
+        </tbody>
+    </table>
+    <a href="index.html">Go back to input form</a>
+</div>
+
+</body>
+
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+        getAllUsers();
+
+    });
+
+    function getAllUsers() {
+        $.ajax({ // ajax call starts
+            type: "GET", // POST method
+            url: "http://localhost:3000/api/getAllUsers",
+            success: function (response) {
+                if (response['status'] === 'success') {
+                    var tbody = $("#userTableBody");
+                    for (var i = 0; i < response['data'].length; i++) {
+                        insertRowTable(tbody, response['data'][i])
+                    }
+                } else {
+                    alert(response['status'])
+                }
+            },
+        });
+    }
+
+
+
+</script>
+</html>
