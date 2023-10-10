@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .info {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="info">
+        <label for="id">id</label>
+        <p id="id"></p>
+        <label for="name">name</label>
+        <p id="name"></p>
+        <label for="email">email</label>
+        <p id ="email"></p>
+        <label for="companyName">companyName</label>
+        <p id ="companyName"></p>
+        <label for="countryCode">country Code</label>
+        <p id ="countryCode"></p>
+        <label for="phoneNumber">phoneNumber</label>
+        <p id ="phoneNumber"></p>
+        <label for="content">content</label>
+        <p id ="content">.</p>
+        <label for="status">status</label>
+        <p id ="status"></p>
+        <label for="id">id</label>
+
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        var url = window.location.href;
+        var arrPart = url.split('/');
+        $.ajax({
+            type: "GET", // POST method
+            url: `http://localhost:3000/api/getDetailUser/${arrPart[arrPart.length - 1]}`,
+            success: function (response) {
+                if (response['status'] === "success") {
+                    $("#id").text(response['data'][0]['id']);
+                    $("#name").text(response['data'][0]['Name']);
+                    $("#email").text(response['data'][0]['Email']);
+                    $("#companyName").text(response['data'][0]['CompanyName']);
+                    $("#countryCode").text(response['data'][0]['CountryCode']);
+                    $("#phoneNumber").text(response['data'][0]['PhoneNumber']);
+                    $("#content").text(response['data'][0]['Content']);
+                    $("#status").text(response['data'][0]['Check']);
+                } else if (response['status'] === "fail") {
+                    alert(response['message'])
+                }
+            },
+        });
+    });
+</script>
+</html>
+
